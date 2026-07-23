@@ -1,1 +1,0 @@
-In W2 and W3 "orders_features.csv" is created, both are different, therefore, W4 requires features file that should contain both csv's data. Run the code in this file to have a compiled features.csv file.

@@ -1,0 +1,23 @@
+#1. Wrap churn_v2.pkl in the FastAPI app; test with curl including one malformed request — confirm Pydantic rejects it with a clear error.
+from fastapi import FastAPI
+from pydantic import BaseModel, Field
+import pandas as pd
+import joblib
+app = FastAPI(title="Churn Prediction API")
+pipe = joblib.load("C:\\Users\\EMAN TAHIR\\Desktop\\internship\\ml handbook\\ml\\W9. Week 9 Deployment + MLOps Tracking, Serving, Monitoring\\churn_v2.pkl")
+from pydantic import BaseModel, Field
+class Customer(BaseModel):
+    user_id: int
+    last_order_date: str
+    first_order_date: str
+    order_count: int = Field(..., ge=0)
+    avg_order_value: float = Field(..., ge=0)
+    avg_review_stars: float = Field(..., ge=0, le=5)
+    days_since_last_order: int = Field(..., ge=0)
+    tenure_days: int = Field(..., ge=0)
+    order_velocity: float = Field(..., ge=0)
+@app.post("/predict")
+def predict(customer: Customer):
+    X = pd.DataFrame([customer.model_dump()])
+    p = float(pipe.predict_proba(X)[0, 1])
+    return {"churn_probability": round(p, 3),"flag": p >= 0.30,"model_version": "churn_v2"}

@@ -1,4 +1,3 @@
-#1. Wrap churn_v2.pkl in the FastAPI app; test with curl including one malformed request — confirm Pydantic rejects it with a clear error.
 from fastapi import FastAPI
 from pydantic import BaseModel, Field
 import pandas as pd

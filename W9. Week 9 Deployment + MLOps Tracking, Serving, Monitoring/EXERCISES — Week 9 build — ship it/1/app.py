@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field
 import pandas as pd
 import joblib
 app = FastAPI(title="Churn Prediction API")
-pipe = joblib.load("C:\\Users\\EMAN TAHIR\\Desktop\\internship\\ml handbook\\ml\\W9. Week 9 Deployment + MLOps Tracking, Serving, Monitoring\\churn_v2.pkl")
+pipe = joblib.load("churn_v2.pkl")
 from pydantic import BaseModel, Field
 class Customer(BaseModel):
     user_id: int
